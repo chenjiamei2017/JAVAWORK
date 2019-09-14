@@ -1,1 +1,69 @@
+public interface Employee {
+	public String toString();
+	public void addSalary(int amount);
+	
+}
+public class Manager implements Employee {
+	public int salary =0;
+	@Override
+	public void addSalary(int amount)
+	{
+		this.salary+=amount;
+	}
 
+	public String toString()
+	{
+		return "Manager's salary:   "+this.salary;
+	}
+
+}
+public class Worker implements Employee{
+	public int salary =0;
+	@Override
+	public void addSalary(int amount)
+	{
+		this.salary+=amount;
+	}
+	public String toString()
+	{
+		return "worker's salary:   "+this.salary;
+	}
+	
+
+}
+public class Campany {
+	public static List<Employee>getEmployees(){
+		List<Employee>employees=new ArrayList<Employee>();
+		Random random=new Random();
+		for(int i =0;i<5;i++)
+		{
+			if(random.nextInt(5)>3)//生成0到5之间的整数
+			{
+				employees.add(new Manager());
+				}
+			else
+				employees.add(new Worker());
+		}
+		return employees;
+	}
+
+}
+public class TestProxy {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		List<Employee>employees=Campany.getEmployees();
+		for(Employee employee:employees)//遍历employees列表的元素
+		{
+			if(employee instanceof Manager)
+			{
+				employee.addSalary(5000);
+			}
+			else
+				employee.addSalary(1000);
+			System.out.println(employee.toString());
+		}
+		
+		
+	}
+}
