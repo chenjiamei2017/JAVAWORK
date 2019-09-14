@@ -67,3 +67,45 @@ public class TestProxy {
 		
 	}
 }
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+
+public class DyProxy implements InvocationHandler{
+private Object proxied;
+	public DyProxy(Object proxied) {
+		// TODO 自动生成的构造函数存根
+		this.proxied=proxied;
+	}
+
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		// TODO 自动生成的方法存根
+		method.invoke(this.proxied, args);
+		return null;
+	}
+}
+import java.lang.reflect.Proxy;
+import java.util.List;
+
+public class TestDyProxy {
+
+	public static void main(String[] args) {
+		// TODO 自动生成的方法存根
+		Manager manager=new Manager();
+		Worker worker=new Worker();
+		manager.addSalary(5000);
+		worker.addSalary(1000);
+		
+				Employee employee1=(Employee)Proxy.newProxyInstance(Employee.class.getClassLoader(), 
+						new Class[] {Employee.class}, new DyProxy(worker));
+	
+				Employee employee2=(Employee)Proxy.newProxyInstance(Employee.class.getClassLoader(), 
+						new Class[] {Employee.class}, new DyProxy(manager));
+			System.out.println(manager.toString());
+	
+		
+		
+	}
+
+}
